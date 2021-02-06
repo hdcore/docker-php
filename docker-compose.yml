@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  local-7.4:
+    build:
+      context: .
+      dockerfile: 7.4/Dockerfile
+  local-8.0:
+    build:
+      context: .
+      dockerfile: 8.0/Dockerfile
