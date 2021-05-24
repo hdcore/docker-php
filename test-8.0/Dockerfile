@@ -1,1 +1,0 @@
-FROM docker-php_local-8.0
