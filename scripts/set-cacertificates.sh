@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Author Danny
-# Version GIT: 2021-05-24 15:29
+# Version GIT: 2021-05-25 16:54
 
 # set-cacertificates.sh 
 # Add the certificates to the local certificate store
@@ -36,7 +36,17 @@ while IFS='=' read -r name value ; do
   then
     echo "Adding extra CA certificate: ${value}"
     newname=$(basename $value)
-    cp "${value}" "${certpath}${newname,,}.crt" || exit 1 
+    cp "${value}" "${certpath}${newname,,}.crt" || exit 11 
+  fi
+done < <(set)
+
+# Add the CACERT_VAR_* (ci/cd)
+while IFS='=' read -r name value ; do
+  if [[ $name == 'CACERT_VAR_'* ]]
+  then
+    echo "Adding extra CA certificate: ${value}"
+    newname=$name
+    printf "%s" "${value}" > "${certpath}${newname,,}.crt" || exit 12 
   fi
 done < <(set)
 
@@ -44,7 +54,7 @@ done < <(set)
 if [[ -d "${certpath}" ]] && [[ -n `ls -A "${certpath}"` ]]
 then
     echo "Update CA certificates"
-    $certcmd || exit 2
+    $certcmd || exit 21
 fi
 
 echo -e "\e[32mDone\e[0m"
