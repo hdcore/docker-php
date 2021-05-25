@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Author Danny
-# Version GIT: 2021-05-25 16:54
+# Version GIT: 2021-05-25 17:09
 
 # set-cacertificates.sh 
 # Add the certificates to the local certificate store
@@ -30,21 +30,21 @@ do
   cp ${f} ${certpath}/ || exit 1
 done
 
-# Add the CACERT_FILE_* (ci/cd)
+# Add the CACERT_FILE_* and CACERT_VAR_* (ci/cd)
 while IFS='=' read -r name value ; do
+  # CACERT_FILE_*
+  # 2021-05-25: the gitlab FILE type in variables has an expansion bug in scripts: issue 93089
   if [[ $name == 'CACERT_FILE_'* ]]
   then
     echo "Adding extra CA certificate: ${value}"
     newname=$(basename $value)
     cp "${value}" "${certpath}${newname,,}.crt" || exit 11 
   fi
-done < <(set)
-
-# Add the CACERT_VAR_* (ci/cd)
-while IFS='=' read -r name value ; do
+  # CACERT_VAR_*
+  # 2021-05-25: less secure but working as a workaround
   if [[ $name == 'CACERT_VAR_'* ]]
   then
-    echo "Adding extra CA certificate: ${value}"
+    echo "Adding extra CA certificate: ${name}"
     newname=$name
     printf "%s" "${value}" > "${certpath}${newname,,}.crt" || exit 12 
   fi
