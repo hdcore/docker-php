@@ -31,7 +31,7 @@ jobs:
     name: Build and push ${{ matrix.version }}
     strategy:
       matrix:
-        version: ["7.4", "8.0"]
+        version: ["7.4", "8.0", "8.1"]
       fail-fast: false
     steps:
       - name: Checkout
