@@ -10,3 +10,8 @@ services:
     build:
       context: .
       dockerfile: 8.0/Dockerfile
+  local-php8.1-run:
+#    image: local-php-run:8.1
+    build:
+      context: .
+      dockerfile: 8.1/Dockerfile

@@ -8,6 +8,8 @@ For use in Dockerfile or docker-compose.yml
 FROM hdcore/docker-php:7.4
 
 FROM hdcore/docker-php:8.0
+
+FROM hdcore/docker-php:8.1
 ```
 
 # FAQ
@@ -22,6 +24,8 @@ docker-compose build
 docker-compose build local-php7.4-run
 
 docker-compose build local-php8.0-run
+
+docker-compose build local-php8.1-run
 ```
 
 ### Add proxy during build time only
@@ -30,6 +34,8 @@ docker-compose build local-php8.0-run
 docker image build . -f .\7.4\Dockerfile -t local-php7.4-run --build-arg http_proxy=http://proxy.url:8080 --rm --progress plain
 
 docker image build . -f .\8.0\Dockerfile -t local-php8.0-run --build-arg http_proxy=http://proxy.url:8080 --rm --progress plain
+
+docker image build . -f .\8.1\Dockerfile -t local-php8.1-run --build-arg http_proxy=http://proxy.url:8080 --rm --progress plain
 ```
 
 ## Running the image
@@ -40,6 +46,8 @@ docker image build . -f .\8.0\Dockerfile -t local-php8.0-run --build-arg http_pr
 docker-compose run --rm local-php7.4-run
 
 docker-compose run --rm local-php8.0-run
+
+docker-compose run --rm local-php8.1-run
 ```
 
 ### Add proxy on startup
